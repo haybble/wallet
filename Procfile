@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/wallet.jar
+web: java $JAVA_OPTS -jar target/wallet-0.0.1-SNAPSHOT.jar
