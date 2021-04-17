@@ -1,1 +1,1 @@
-web: gunicorn <WalletApplication.java>:<WalletApplication>
+web: gunicorn <WalletApplication>:<WalletApplication>
