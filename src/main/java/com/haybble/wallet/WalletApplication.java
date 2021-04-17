@@ -24,7 +24,7 @@ public class WalletApplication {
     
       @RequestMapping("/")
     @ResponseBody
-    String home() {
+   public String home() {
       return "Hello World!";
     }
 
