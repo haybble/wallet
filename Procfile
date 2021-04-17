@@ -1,1 +1,1 @@
-web: java  -jar target/wallet.jar
+web: java -Dserver.port=$PORT -jar target/wallet.jar
