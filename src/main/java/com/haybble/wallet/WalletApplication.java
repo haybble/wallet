@@ -25,7 +25,7 @@ public class WalletApplication {
       @RequestMapping("/")
     @ResponseBody
    public String home() {
-      return "Hello World!";
+      return "Hello World!" ;
     }
 
     @Autowired
@@ -38,7 +38,7 @@ public class WalletApplication {
     @Bean
     public void seedUserdata() {
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5000; i++) {
             Faker fakeData = new Faker();
             String name = fakeData.name().firstName();
             String username =name+i;
