@@ -38,7 +38,7 @@ public class WalletApplication {
     @Bean
     public void seedUserdata() {
 
-        for (int i = 0; i < 5000; i++) {
+        for (int i = 0; i < 50; i++) {
             Faker fakeData = new Faker();
             String name = fakeData.name().firstName();
             String username =name+i;
