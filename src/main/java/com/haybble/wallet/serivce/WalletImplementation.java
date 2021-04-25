@@ -70,7 +70,7 @@ public class WalletImplementation implements WalletService {
 
             if (newBalance.compareTo(BigDecimal.ZERO) >= 0) {
                 wallet.setBalance(wallet.getBalance().add(transactionAmount));
-                wallet.setLast_updated_by("Admin");
+                wallet.setLastUpdatedBy("Admin");
                 wallet.setLastUpdated(new Date());
                 return walletRepository.save(wallet) != null;
             }else{

@@ -3,20 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.haybble.wallet.repository;
+package com.haybble.wallet.serivce;
 
 import com.haybble.wallet.entities.Users;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 /**
  *
  * @author Administrator
  */
-@Transactional
-public interface UserRepository extends JpaRepository<Users, Integer>  {
-
+public interface UserService {
+     List<Users> findAll() throws Exception;
+    
 }
-
-

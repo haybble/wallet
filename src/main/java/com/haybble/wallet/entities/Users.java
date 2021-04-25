@@ -5,14 +5,14 @@
  */
 package com.haybble.wallet.entities;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,32 +24,36 @@ import org.springframework.beans.factory.annotation.Value;
  * @author Olagunju Jesufemi
  */
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter 
+@NoArgsConstructor
 @Table(name = "users")
 public class Users  {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
-    private int user_id;
+    private int userId;
     
     @Column(name="username",unique = true,nullable = false)
     private String username;
  
     @Column(name="created_by")
     @Value(value = "admin")
-    private String created_by;
+    private String createdBy;
     
     @Column(name="created_date")
-    private Date created_date;
+    private Date createdDate;
   
-    
+    @OneToOne
+    @JoinColumn(name = "user_id",referencedColumnName = "user_id",table = "users")
+    private Wallet wallet;
 
-    public Users(int user_id, String username, String created_by, Date created_date) {
-        this.user_id = user_id;
+    public Users(int userId, String username, String createdBy, Date createdDate) {
+        this.userId = userId;
         this.username = username;
-        this.created_by = created_by;
-        this.created_date = created_date;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
     }
 
    

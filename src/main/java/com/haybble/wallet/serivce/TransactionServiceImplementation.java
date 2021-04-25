@@ -28,14 +28,23 @@ public class TransactionServiceImplementation implements TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-@Autowired private WalletService walletService;
+    @Autowired
+    private WalletService walletService;
 
     @Autowired
     private TransactionTypeRepository transactionTypeRepository;
 
     @Override
     public List<Transaction> getTransactionsByWalletId(int walletId) throws Exception {
-        return transactionRepository.findByWallet(walletId);
+        try {
+           
+            List<Transaction> listAll = transactionRepository.findByWalletId(walletId);
+             System.out.println("list transactions"+listAll);
+            return transactionRepository.findByWalletId(walletId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -50,25 +59,29 @@ public class TransactionServiceImplementation implements TransactionService {
             });
 
             //Get transactionType reference
-            TransactionType transactionType = transactionTypeRepository.getOne(transaction.getTransaction_type_id());
+            TransactionType transactionType = transactionTypeRepository.getOne(transaction.getTransactionTypeId());
 //            System.out.println("transtype"+ transactionType);
 //            System.out.println("transactioncode"+transactionType.getCode());
             Boolean isCredit = transactionType.getCode().equalsIgnoreCase("cr") ? true : false;
-           transaction.setDescription( isCredit == true ?"Credit transaction":"Debit transaction");
+            transaction.setDescription(isCredit == true ? "Credit transaction" : "Debit transaction");
 //            System.out.println("iscredit"+isCredit);
 
             BigDecimal amount = transaction.getAmount();
 //            System.out.println("amunt"+amount);
             //Check wallet is present
-            Wallet wallet = walletService.findById(transaction.getWallet_id());
-            
-//            System.out.println("walletbalance"+wallet.getBalance());
+            Wallet wallet = walletService.findById(transaction.getWalletId());
 
+//            System.out.println("walletbalance"+wallet.getBalance());
             Boolean walletTransaction = walletService.updateWalletAmount(wallet, amount, isCredit);
 
-           return (walletTransaction == true) ?  transactionRepository.save(transaction) != null:  false;
+            return (walletTransaction == true) ? transactionRepository.save(transaction) != null : false;
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    @Override
+    public List<TransactionType> getTransactionType() throws Exception {
+       return transactionTypeRepository.findAll();
     }
 }

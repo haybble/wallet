@@ -6,17 +6,17 @@
 package com.haybble.wallet.repository;
 
 import com.haybble.wallet.entities.Transaction;
-import com.haybble.wallet.entities.Wallet;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Administrator
  */
 
-
+@Transactional
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
-    List<Transaction> findByWallet(int walletId);
+    List<Transaction> findByWalletId(int walletId);
     
 }

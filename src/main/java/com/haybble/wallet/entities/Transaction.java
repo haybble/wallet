@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,47 +33,42 @@ import lombok.Setter;
 public class Transaction {
 
     @Id
-    @Column(name = "transaction_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int transaction_id;
+    @Column(name = "transaction_id")
+    private int transactionId;
 
     @Column(name = "transaction_type_id", nullable = false)
-    private int transaction_type_id;
+    private int transactionTypeId;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-  
-    @Column(name = "wallet_id",nullable = false)
-    private int wallet_id;
+    @Column(name = "wallet_id", nullable = false)
+    private int walletId;
 
     @Column(name = "description")
-   private String description;
+    private String description;
 
     @Column(name = "last_updated")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date last_updated;
+    private Date lastUpdated;
 
     @Column(name = "last_updated_by")
-    private String last_updated_by;
-    
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-     @JoinColumn(name = "transaction_type_id",nullable = false,insertable = false, updatable = false)
-    private TransactionType transactionType;
-        @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wallet_id",nullable = false,insertable = false, updatable = false)
-    private Wallet wallet;
+    private String lastUpdatedBy;
 
+  
+     @ManyToOne
+     @JoinColumn(name = "wallet_id",nullable = false,insertable = false, updatable = false,referencedColumnName = "wallet_id",table = "transaction")
+     private Wallet wallet;
+     
     public Transaction(int transaction_id, int transaction_type_id, BigDecimal amount, int wallet_id, String description, Date last_updated, String last_updated_by) {
-        this.transaction_id = transaction_id;
-        this.transaction_type_id = transaction_type_id;
+        this.transactionId = transaction_id;
+        this.transactionTypeId = transaction_type_id;
         this.amount = amount;
-        this.wallet_id = wallet_id;
+        this.walletId = wallet_id;
         this.description = description;
-        this.last_updated = last_updated;
-        this.last_updated_by = last_updated_by;
+        this.lastUpdated = last_updated;
+        this.lastUpdatedBy = last_updated_by;
     }
 
-    
 }

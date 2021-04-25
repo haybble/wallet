@@ -13,67 +13,71 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@EnableJpaRepositories
 @SpringBootApplication
 public class WalletApplication {
-    
-    
-      @RequestMapping("/")
+
+    @RequestMapping("/")
     @ResponseBody
-   public String home() {
-      return "Hello World!" ;
+    public String home() {
+        return "Hello World!";
     }
 
     @Autowired
     UserRepository userRepository;
-    
-    @Autowired WalletRepository walletRepository;
-    
-    @Autowired TransactionTypeRepository transactionTypeRepository;
+
+    @Autowired
+    WalletRepository walletRepository;
+
+    @Autowired
+    TransactionTypeRepository transactionTypeRepository;
 
     @Bean
     public void seedUserdata() {
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 5; i++) {
             Faker fakeData = new Faker();
             String name = fakeData.name().firstName();
-            String username =name+i;
+            String username = name + i;
             Users user = new Users();
             user.setUsername(username);
             Date date = new Date();
 
-            user.setCreated_date(date);
-            user.setCreated_by(name);
+            user.setCreatedDate(date);
+            user.setCreatedBy(name);
 
             userRepository.save(user);
-            int userId = user.getUser_id();
+            int userId = user.getUserId();
             Wallet wallet = new Wallet();
+            wallet.setUserId(userId);
             wallet.setBalance(BigDecimal.ZERO);
-            wallet.setLast_updated_by(name);
+            wallet.setLastUpdatedBy(name);
             wallet.setLastUpdated(date);
-            wallet.setLast_updated_by(name);
+            wallet.setLastUpdatedBy(name);
             walletRepository.save(wallet);
-                //       System.out.println("useride = "+user.getUser_id());
+            //       System.out.println("useride = "+user.getUser_id());
         }
-           
-            TransactionType transactionType =new TransactionType();
-            transactionType.setCode("cr");
-            transactionType.setDescription("credit transaction");
-            transactionType.setName("credit");
-            transactionType.setLast_updated_by("Admin");
-            transactionType.setLast_updated(new Date());
-            transactionTypeRepository.save(transactionType);
-           TransactionType transactionType2 =new TransactionType();
-            transactionType2.setCode("dr");
-            transactionType2.setDescription("debit transaction");
-            transactionType2.setName("debit");
-            transactionType2.setLast_updated_by("Admin");
-            transactionType2.setLast_updated(new Date());
-             transactionTypeRepository.save(transactionType2);
+
+        TransactionType transactionType = new TransactionType();
+        transactionType.setCode("cr");
+        transactionType.setDescription("credit transaction");
+        transactionType.setName("credit");
+        transactionType.setLastUpdatedBy("Admin");
+        transactionType.setLastUpdated(new Date());
+        transactionTypeRepository.save(transactionType);
+        TransactionType transactionType2 = new TransactionType();
+        transactionType2.setCode("dr");
+        transactionType2.setDescription("debit transaction");
+        transactionType2.setName("debit");
+        transactionType2.setLastUpdatedBy("Admin");
+        transactionType2.setLastUpdated(new Date());
+        transactionTypeRepository.save(transactionType2);
 
     }
 

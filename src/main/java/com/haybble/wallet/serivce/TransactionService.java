@@ -6,6 +6,7 @@
 package com.haybble.wallet.serivce;
 
 import com.haybble.wallet.entities.Transaction;
+import com.haybble.wallet.entities.TransactionType;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ import java.util.List;
  */
 public interface TransactionService {
 
-    public List<Transaction> getTransactionsByWalletId( int walletId) throws Exception;
+    public List<Transaction> getTransactionsByWalletId(int walletId) throws Exception;
     public Boolean createTransaction( String response) throws Exception;
+    public List<TransactionType> getTransactionType() throws Exception;
 
 }
